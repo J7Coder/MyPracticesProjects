@@ -1,0 +1,74 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background: url('../img/fondo.png');
+	background-size:cover;
+}
+.form-holder {
+	width: 100%;
+	max-width: 400px;
+	padding: 20px;
+	background: rgba(252, 250, 250, 0.808);
+	border-radius: 15px;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form-holder input {
+	display: block;
+	width: 100%;
+	background: rgba(240,240,240, .5);
+	border: none;
+	font-size: 16px;
+	padding: 15px;
+	outline: none;
+	border-radius: 40px;
+	color: #555;
+	margin: 20px auto;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+ input:focus{
+	border: 1px solid #3636f7;
+	
+}
+
+.form-holder button  {
+	display: block;
+	width: 100%;
+	background: #3636f7;
+	border: none;
+	font-size: 16px;
+	padding: 15px;
+	outline: none;
+	border-radius: 40px;
+	color: #fff;
+	margin: 20px auto;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.form-holder button a{
+	color:#fff;
+	text-decoration: none;
+}
+
+.form-holder button:hover {
+	opacity: .8;
+}
+
+.form-holder img {
+	width: 100px;
+	display: block;
+	margin: 10px auto;
+	opacity: .7;
+}
+
+.errorUser,.errorPass,.errorMessage{
+	font-size:14px;
+}
