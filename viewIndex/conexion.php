@@ -1,5 +1,5 @@
 <?php
-$cadena='mysql:host=localhost;dbname=courso_php';
+$cadena='mysql:host=localhost;dbname=proyecto_abcpack';
 $usuario='root';
 $password='';
 

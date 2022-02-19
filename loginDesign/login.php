@@ -27,7 +27,7 @@
 			<p class="errorUser text-center d-none text-danger"></p>
 			<input type="password" placeholder="Contraseña" name="password" id="passwords"  class="form-control ml-3 mt-3">
 			<p class="errorPass d-none text-center text-danger"></p>
-			<p class=" errorMessage text-center text-danger"><?php //if(!$message_session==""){echo $message_session;}?></p>
+			<p class=" errorMessage text-center text-danger"></p>
 			<button name="btnIntrar" type="submit">Ingresar</button>
 		</form>
 	</div>

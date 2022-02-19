@@ -3,7 +3,7 @@
     session_start();
     include "datos.php";
     if(!$_SESSION['user'] && !$_SESSION['password']){
-        header('location:loginDesign/login.php');
+        header('location:../loginDesign/login.php');
     }
 ?>
 
@@ -62,7 +62,7 @@
   </form>
     <ul class="navbar-nav">
      <li class="nav-item">
-      <a class="nav-link right" href="menuPrincipal/index.php">Home</a>
+      <a class="nav-link right" href="../menuPrincipal/index.php">Home</a>
         </li>
     </ul>
 </nav>

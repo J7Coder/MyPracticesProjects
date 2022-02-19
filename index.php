@@ -1,3 +1,3 @@
 <?php
 
-header('location:loginDesign/login.php');
+header('location:/loginDesign/login.php');

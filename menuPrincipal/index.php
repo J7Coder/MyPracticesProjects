@@ -115,10 +115,25 @@
         .space{
                 margin-left: 200px;
         }
+        .footer {
+            width: 100%;
+        }
+
+        .texto{
+            margin-left:145px;
+            color: rgba(89, 173, 232, 0.8);
+           
+        }
+        .texto h5{
+            font-size:16px;
+        }
+       
+       
     </style>
 </head>
 <body>
     <div class="hero mb-5">
+
         <nav class="navbar navbar-expand-sm">
             <img src="images/logo3.png" alt="" class="logo">
             <ul class="navbar-nav">
@@ -127,7 +142,7 @@
                     Grupos
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Crear Grupos</a>
+                        <a class="dropdown-item" href="../viewIndex/datosIndex.php">Crear Grupos</a>
                         <a class="dropdown-item" href="#">Ver Grupos</a>
                      </div>
                 </li>
@@ -137,7 +152,7 @@
                     Procesos
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Agregar Proceso</a>
+                        <a class="dropdown-item" href="../viewIndex/procesoIndex.php">Agregar Proceso</a>
                         <a class="dropdown-item" href="#">Ver Procesos</a>
                      </div>
                 </li>
@@ -147,7 +162,7 @@
                     Trabajadores
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Agregar</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#agregarT">Agregar</a>
                         <a class="dropdown-item" href="#">Ver Listado</a>
                      </div>
                 </li>
@@ -157,13 +172,15 @@
                     Informaciones
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Agregam Info</a>
-                        <a class="dropdown-item" href="#">Editar Info</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#myModal">Agregar Info</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#editarInfo">Editar Info</a>
                      </div>
                 </li>
                 
             </ul>
         </nav>
+        <div class="texto"><h5>ABC PACK</h5></div>
+
         <div class="info">
             <h1 class="welcome">¡Te damos la Bienvenida!</h1>
             <a href="../loginDesign/sessionCerrar.php" onclick="return cerrarSession()">Cerrar</a>
@@ -174,21 +191,118 @@
         </div>
     </div>
 
-    <footer
-          class="text-center text-lg-start text-dark"
-          style="background: #edf2fc;"
-          >
-        <div
-         class="text-center p-3"
-         style="background-color: rgba(0, 0, 235, 0.2)"
-         >
-      © 2022 Copyright:
-      <a class="text-dark" href="#"
-         >J7Coder Design</a>
+        
+    <div class="container mt-3">
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title ml-5">Agregar Informaciones</h4>
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                            <label for="descripcion"><h6>Descripción:</h6></label>
+                            <input type="text" class="form-control" id="descripcion" placeholder="Ingresa la descripción o el titulo">
+                            <label for="infos" class="mt-4"><h6>Contenido:</h6></label>
+                            <textarea class="form-control" rows="5" id="info" name="text" placeholder="Ingresa informaciones"
+                              style="resize:none"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Cancelar</button>
+                        </form>
+                    </div>
+                
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+      
+    <div class="container mt-3">
+
+        <div class="modal fade" id="agregarT">
+            <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title ml-5">Nuevo trabajadores</h4>
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                            <label for="nombreT"><h6>Nombre:</h6></label>
+                            <input type="text" class="form-control" id="nombreT" placeholder="Nombre del trabajador">
+                            <label for="apelT" class="mt-4"><h6>Apellido:</h6></label>
+                            <input type="text" class="form-control" id="apelT" placeholder="Apellido del trabajador">
+                            <label for="rutT" class="mt-4"><h6>Rut:</h6></label>
+                            <input type="text" class="form-control mb-4" id="rutT" placeholder="Rut del trabajador">
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Cancelar</button>
+                        </form>
+                    </div>
+                
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-3">
+
+        <div class="modal fade" id="editarInfo">
+            <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title ml-5">Editar Informaciones</h4>
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                            <label for="descripcion"><h6>Descripcion:</h6></label>
+                            <input type="text" class="form-control" id="descripcion">
+                            <label for="contenido" class="mt-3"><h6>Contenido:</h6></label>
+                            <textarea class="form-control mb-3" rows="5" id="contenido" name="text" style="resize: none;"></textarea>
+                            <button type="submit" class="btn btn-primary">Editar</button>
+                            <a href="#" class="float-right">Eliminar</a>
+                        </form>
+                    </div>
+                
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+  
+    <div class="text-center p-3 footer" style="background: #edf2fc;">
+         © 2022 Copyright:
+        <a class="text-dark" href="#">J7Coder Design</a>
         
     </div>
-    <!-- Copyright -->
-  </footer>
+   
+ 
+
     <script>
         function cerrarSession(){
             const responce=confirm("¿Quieres salir del sistema?");
