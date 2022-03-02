@@ -1,6 +1,6 @@
 <?php
     session_start();
-
+    include '../viewIndex/datos.php';
     if(!$_SESSION['user'] && !$_SESSION['password']){
         header('location: ../loginDesign/login.php');
     }
@@ -126,8 +126,14 @@
         }
         .texto h5{
             font-size:16px;
+        } .texto h5 span{
+            color:darkblue;
         }
-       
+        .editor{
+            width:60%;
+            margin:auto;
+            margin-top:20px;
+        }
        
     </style>
 </head>
@@ -143,7 +149,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="../viewIndex/datosIndex.php">Crear Grupos</a>
-                        <a class="dropdown-item" href="#">Ver Grupos</a>
+                        <a class="dropdown-item" href="../viewIndex/verGrupos.php">Ver Grupos</a>
                      </div>
                 </li>
 
@@ -153,7 +159,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="../viewIndex/procesoIndex.php">Agregar Proceso</a>
-                        <a class="dropdown-item" href="#">Ver Procesos</a>
+                        <a class="dropdown-item" href="../viewIndex/verProcesos.php">Ver Procesos</a>
                      </div>
                 </li>
 
@@ -163,7 +169,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#agregarT">Agregar</a>
-                        <a class="dropdown-item" href="#">Ver Listado</a>
+                        <a class="dropdown-item" href="../viewIndex/verTrabajadores.php">Ver Listado</a>
                      </div>
                 </li>
 
@@ -179,7 +185,26 @@
                 
             </ul>
         </nav>
-        <div class="texto"><h5>ABC PACK</h5></div>
+    
+            <?php 
+
+                if(!$Succed_dos==""){
+                    echo "<div class='alert alert-success alert-dismissible fixed-top editor'>
+                    $Succed_dos
+                    <a href='index.php' class='float-right'>Cerar</a>
+                    </div>";
+                }  
+
+                if(!$err_dos==""){
+                    echo "<div class='alert alert-danger alert-dismissible fixed-top editor'>
+                    $err_dos
+                    <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                    </div>";
+                }  
+            
+            ?>
+
+        <div class="texto"><h5>ABC <span>PACK</span></h5></div>
 
         <div class="info">
             <h1 class="welcome">¡Te damos la Bienvenida!</h1>
@@ -240,16 +265,22 @@
                     
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="" method="post">
+                        <form method="post" id="formT" >
                             <div class="form-group">
-                            <label for="nombreT"><h6>Nombre:</h6></label>
-                            <input type="text" class="form-control" id="nombreT" placeholder="Nombre del trabajador">
-                            <label for="apelT" class="mt-4"><h6>Apellido:</h6></label>
-                            <input type="text" class="form-control" id="apelT" placeholder="Apellido del trabajador">
-                            <label for="rutT" class="mt-4"><h6>Rut:</h6></label>
-                            <input type="text" class="form-control mb-4" id="rutT" placeholder="Rut del trabajador">
-                            <button type="submit" class="btn btn-primary">Agregar</button>
-                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Cancelar</button>
+                                <label for="nombreT"><h6>Nombre:</h6></label>
+                                <input type="text" name="nombreT" class="form-control" id="nombreT" placeholder="Nombre del trabajador">
+                                <label for="apelT" class="mt-4"><h6>Apellido:</h6></label>
+                                <input type="text" class="form-control" id="apelT" placeholder="Apellido del trabajador" name="apelT">
+                                <label for="rutT" class="mt-4"><h6>Rut:</h6></label>
+                                <input type="text" class="form-control mb-4" id="rutT" placeholder="Ej: XXXXXXXX-X " name="rutT">
+                                <label for="sexoT"><h6>Sexo del trabajador</h6></label>
+                                <select class="form-control" id="sexoT" name="sexoT">
+                                    <option>M</option>
+                                    <option>F</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" onclick="return validarTrabajadores()" name="btn_trabajador">Agregar</button>
+                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal" >Cancelar</button>
                         </form>
                     </div>
                 
@@ -310,6 +341,80 @@
                 return true;
             }
             return false;
+        } 
+
+        var Fn = {
+	    // Valida el rut con su cadena completa "XXXXXXXX-X"
+            validaRut : function (rutCompleto) {
+                if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+                    return false;
+                var tmp 	= rutCompleto.split('-');
+                var digv	= tmp[1]; 
+                var rut 	= tmp[0];
+                if ( digv == 'K' ) digv = 'k' ;
+                return (Fn.dv(rut) == digv );
+            },
+            dv : function(T){
+                var M=0,S=1;
+                for(;T;T=Math.floor(T/10))
+                    S=(S+T%10*(9-M++%6))%11;
+                return S?S-1:'k';
+            }
+        }
+
+
+        function validarTrabajadores(){
+         
+        
+                const nombreT=document.getElementById("nombreT").value;
+                const apelT=document.getElementById("apelT").value;
+                const rutT=document.getElementById("rutT").value;
+
+                nombreT.trim();
+                apelT.trim();
+                rutT.trim();
+
+                if(nombreT==""){
+                    alert("El nombre del trabajador es requerido");
+                    return false;
+                }
+                if(nombreT.length<4){
+                    alert("Por favor ingresa un nombre válido");
+                    return false;
+                }
+                if(nombreT.match(/[0-9]/)){
+                    alert("Nombre del trabajador no es válido");
+                    return false;
+                }
+
+                if(apelT==""){
+                    alert("El apellido del trabajador es requerido");
+                    return false;
+                }
+
+                if(apelT.length<4){
+                    alert("Por favor ingresa un apellido válido");
+                    return false;
+                }
+                if(apelT.match(/[0-9]/)){
+                    alert("El apellido del trabajador no es válido");
+                    return false;
+                }
+
+                if(rutT==""){
+                    alert("Debes ingresar el rut del trabajador");
+                    return false;
+                }
+                const rutValid=Fn.validaRut(rutT.trim());
+                // Uso de la función
+
+                if(!rutValid){
+                    alert("El rut no es válido");
+                    return false;
+                }
+
+                return true;
+              
         }
     </script>
 </body>

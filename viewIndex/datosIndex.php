@@ -38,7 +38,9 @@
             margin-left:300px;
         }
         .right{
-            margin-left:200px;
+            margin-left:140px;
+        }.rights{
+            margin-left:100px;
         }
         .alert-info{
             width:60%;
@@ -61,9 +63,12 @@
     <button class="btn btn-success" type="submit" name="buscar_grupo"  onclick="return validarBuscarDos()">Buscar</button
   </form>
     <ul class="navbar-nav">
-     <li class="nav-item">
-      <a class="nav-link right" href="../menuPrincipal/index.php">Home</a>
+        <li class="nav-item">
+            <a class="nav-link right" href="../menuPrincipal/index.php">Home</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link rights" href="verGrupos.php">Ver todos</a>
+            </li>
     </ul>
 </nav>
         <?php  
@@ -114,7 +119,8 @@
                         <a href="datosIndex.php?id= <?php echo htmlspecialChars($datos["Id"]);?>" class="float-right text-white"><i class="fas fa-pencil-alt"></i></a>
                     </div>
                     
-                   <div class="text-dark pl-2 pb-2 card-body mb-3"><?php echo htmlspecialChars($datos["T_1"]).'<br>';?>
+                   <div class="text-dark pl-2 pb-2 card-body mb-3">
+                       <?php echo htmlspecialChars($datos["T_1"]).'<br>';?>
                         <?php echo htmlspecialChars($datos["T_2"]).'<br>';?>
                         <?php echo htmlspecialChars($datos["T_3"]).'<br>';?>
                         <?php echo htmlspecialChars($datos["T_4"]).'<br>';?>

@@ -65,7 +65,9 @@
             font-size:16px;
         }
         .right{
-            margin-left:200px;
+            margin-left:140px;
+        }.rights{
+            margin-left:100px;
         }
 
         .alert-success{
@@ -86,9 +88,12 @@
     <input class="form-control mr-sm-2 left key-word" type="text" placeholder="Nombre del proceso" name="keyWord">
     <button class="btn btn-success" type="submit" name="buscar">Buscar</button>
   </form>
-  <ul class="navbar-nav">
-     <li class="nav-item">
-      <a class="nav-link right" href="../menuPrincipal/index.php">Home</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link right" href="../menuPrincipal/index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rights" href="verProcesos.php">Ver todos</a>
         </li>
     </ul>
 </nav>

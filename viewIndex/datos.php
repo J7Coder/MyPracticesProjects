@@ -3,7 +3,7 @@ include "conexion.php";
 
 //Buscador de grupos
 global $mensaje;
-if(isset($_POST["buscar_grupo"])){
+if(isset($_POST["buscar_grupo"])|| isset($_POST["ver_grupos"])){
     $key_word=$_POST["keyWord"];
     $key_word=$key_word."%";
     $sql="select * from grupos where T_1 like ? or T_2 like ? or T_3 like ? or T_4 like ?";
@@ -187,7 +187,7 @@ if(isset($_POST["btn_editar"])){
 
 //buscar proceso
     global $message;
-if(isset($_POST["buscar"])){
+if(isset($_POST["buscar"]) || isset($_POST["ver_procesos"])){
     $key_word=$_POST["keyWord"];
     $key_word=$key_word."%";
     $sql_proceso="select * from procesos where Nombre like ?";
@@ -250,4 +250,56 @@ if(isset($_POST["btnProceso"])){
 }
 
 
+//Agregar Trabajadores
 
+Global $Succed_dos;
+Global $err_dos;
+$err_dos="";
+if(isset($_POST["btn_trabajador"])){
+$nombreT=$_POST["nombreT"];
+$apelT=$_POST["apelT"];
+$rutT=$_POST["rutT"];
+$sexoT=$_POST["sexoT"];
+
+$sql_proceso="select * from trabajadores where Rut=?";
+$_results= $pdo-> prepare($sql_proceso);
+$_results->execute(array($rutT));
+$trabajador=$_results->fetch();
+$result="";
+if(!$trabajador){
+    $sql="insert into trabajadores (Nombre, Apellido, Rut, Genero) values(?, ?, ?, ?)";
+    $query=$pdo->prepare($sql);
+    $result=$query->execute(array($nombreT,$apelT,$rutT,$sexoT));
+}else{
+    $err_dos="El trabajador de Rut ".$rutT. " ya esta registrado dentro del sistema";
+}
+
+if($result){
+    $Succed_dos="El trabajador ha sido guardado exitosamente!";
+}
+
+}
+
+
+//buscar Trabajadores
+global $message_dos;
+if(isset($_POST["ver_trabajadores"])){
+    $key_word=$_POST["keyWord3"];
+    $key_word=$key_word."%";
+    $sql_proceso2="select * from trabajadores where Nombre like ?";
+    $_result= $pdo-> prepare($sql_proceso2);
+    $_result->execute(array($key_word));
+    $rows=$_result->rowCount();
+    if($rows==0){
+        $message_dos="No hay resultado para mostrar! \n Verifique el nombre del trabajador que ha ingresado";
+        $sql_proceso2="select * from trabajadores";
+        $_result= $pdo-> prepare($sql_proceso2);
+        $_result->execute();
+    }
+}else{
+    $sql_proceso2="select * from trabajadores";
+    $_result= $pdo-> prepare($sql_proceso2);
+    $_result->execute();
+   
+}
+$res_trabajadores=$_result->fetchAll();
