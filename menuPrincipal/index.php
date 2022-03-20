@@ -1,9 +1,14 @@
 <?php
     session_start();
     include '../viewIndex/datos.php';
+    include '../viewIndex/editarInfo.php';
     if(!$_SESSION['user'] && !$_SESSION['password']){
         header('location: ../loginDesign/login.php');
     }
+
+
+    foreach($_Infos as $info){}
+
 
 ?>
 
@@ -124,6 +129,7 @@
             color: rgba(89, 173, 232, 0.8);
            
         }
+        
         .texto h5{
             font-size:16px;
         } .texto h5 span{
@@ -134,6 +140,27 @@
             margin:auto;
             margin-top:20px;
         }
+
+         /* estillo card ver info */
+         div .cards {
+            width:100%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+            }
+
+        div .headers{
+            background-color: darkblue;
+            color: white;
+            padding: 10px;
+            font-size: 40px;
+            }
+
+        div .containers {
+            padding: 10px;
+            }
+            .modal-header .mages{
+                margin-left:100px;
+            }
        
     </style>
 </head>
@@ -179,7 +206,8 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" data-toggle="modal" data-target="#myModal">Agregar Info</a>
-                        <a class="dropdown-item" data-toggle="modal" data-target="#editarInfo">Editar Info</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#verInfo">Ver Info</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#editarInfo" href="index.php?id= <?php echo htmlspecialChars($info['Id']);?>">Editar Info</a>
                      </div>
                 </li>
                 
@@ -201,6 +229,36 @@
                     <button type='button' class='close' data-dismiss='alert'>&times;</button>
                     </div>";
                 }  
+
+                
+                if(!$success_info==""){
+                    echo "<div class='alert alert-success alert-dismissible fixed-top editor'>
+                    $success_info
+                    <a href='index.php' class='float-right'>Cerar</a>
+                    </div>";
+                }  
+
+                if(!$error_info==""){
+                    echo "<div class='alert alert-danger alert-dismissible fixed-top editor'>
+                    $error_info
+                    <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                    </div>";
+                }  
+
+                if(!$edit_message==""){
+                    echo "<div class='alert alert-success alert-dismissible fixed-top editor'>
+                    $edit_message
+                    <a href='index.php' class='float-right'>Cerar</a>
+                    </div>";
+                }  
+
+                if(!$error_edit==""){
+                    echo "<div class='alert alert-danger alert-dismissible fixed-top editor'>
+                    $error_edit
+                    <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                    </div>";
+                }  
+            
             
             ?>
 
@@ -216,7 +274,7 @@
         </div>
     </div>
 
-        
+        <!-- Modal agrgar informaciones -->
     <div class="container mt-3">
 
         <div class="modal fade" id="myModal">
@@ -234,12 +292,12 @@
                         <form action="" method="post">
                             <div class="form-group">
                             <label for="descripcion"><h6>Descripción:</h6></label>
-                            <input type="text" class="form-control" id="descripcion" placeholder="Ingresa la descripción o el titulo">
+                            <input type="text" class="form-control" id="descripcion" placeholder="Ingresa la descripción o el titulo" name="descripcion">
                             <label for="infos" class="mt-4"><h6>Contenido:</h6></label>
-                            <textarea class="form-control" rows="5" id="info" name="text" placeholder="Ingresa informaciones"
-                              style="resize:none"></textarea>
+                            <textarea class="form-control" rows="5" id="info" name="info" placeholder="Ingresa informaciones"
+                              style="resize:none" name="info"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary" name="btn_info" onclick="return validarInfo()">Guardar</button>
                             <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Cancelar</button>
                         </form>
                     </div>
@@ -250,7 +308,7 @@
         </div>
     </div>
 
-      
+      <!-- //Modal agregar trabajadores -->
     <div class="container mt-3">
 
         <div class="modal fade" id="agregarT">
@@ -290,6 +348,7 @@
         </div>
     </div>
 
+                <!-- //Modal editar informaciones -->
 
     <div class="container mt-3">
 
@@ -308,11 +367,12 @@
                         <form action="" method="post">
                             <div class="form-group">
                             <label for="descripcion"><h6>Descripcion:</h6></label>
-                            <input type="text" class="form-control" id="descripcion">
+                            <input type="text" class="form-control" id="descripciones" value="<?php echo htmlspecialChars($info['Des']);?>" name="des">
+                            <input type="hidden" class="form-control"  value="<?php echo htmlspecialChars($info['Id']);?>" name="id">
                             <label for="contenido" class="mt-3"><h6>Contenido:</h6></label>
-                            <textarea class="form-control mb-3" rows="5" id="contenido" name="text" style="resize: none;"></textarea>
-                            <button type="submit" class="btn btn-primary">Editar</button>
-                            <a href="#" class="float-right">Eliminar</a>
+                            <textarea class="form-control mb-3" rows="5" id="contenidos" name="info" style="resize: none;" ><?php echo htmlspecialChars($info['Info']);?></textarea>
+                            <button type="submit" class="btn btn-primary" name="btn_editarInfo" onclick="return validarInfoEdit()">Editar</button>
+                            <a href="index.php" class="float-right">Cancelar</a>
                         </form>
                     </div>
                 
@@ -322,6 +382,40 @@
         </div>
     </div>
 
+    <!-- modal ver informaciones -->
+
+<div class="container mt-3">
+
+    <div class="modal fade" id="verInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title text-center ml-5 mages text-primary">Informaciones</h4>
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="card cards">
+                        
+                        <div   div class="header headers">
+                        <h1><?php echo htmlspecialChars($info['Des']);?></h1>
+                        </div>
+
+                        <div class="container containers">
+                        <p><?php echo htmlspecialChars($info['Info']);?></p>
+                        </div>
+
+                    </div>
+                </div>
+            
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
 
@@ -415,6 +509,36 @@
 
                 return true;
               
+        }
+
+
+        function validarInfo(){
+            const descripcion=document.getElementById("descripcion").value;
+            const info = document.getElementById("info").value;
+            if(descripcion.trim()==""|| info.trim()==""){
+                alert("Debes completar todos los campos");
+                return false;
+            }
+            if(info.trim().length>500){
+                alert("No se puede agregar más de 500 caracteres para las informaciones");
+                return false;
+            }
+            return true;
+        }
+
+
+        function validarInfoEdit(){
+            const descripcion=document.getElementById("descripciones").value;
+            const info = document.getElementById("contenidos").value;
+            if(descripcion.trim()==""|| info.trim()==""){
+                alert("Debes completar todos los campos");
+                return false;
+            }
+            if(info.trim().length>500){
+                alert("No se puede agregar más de 500 caracteres para las informaciones");
+                return false;
+            }
+            return true;
         }
     </script>
 </body>

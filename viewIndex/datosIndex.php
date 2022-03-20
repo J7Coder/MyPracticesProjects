@@ -70,6 +70,7 @@
             <a class="nav-link rights" href="verGrupos.php">Ver todos</a>
             </li>
     </ul>
+
 </nav>
         <?php  
             if(!$mensaje==""){

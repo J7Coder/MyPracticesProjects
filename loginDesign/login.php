@@ -22,10 +22,10 @@
 <body>
 	<div class="form-holder">
 		<img src="img/logo3.png">
-		<form action="session.php" method="GET" id="formSession" onsubmit="return validarSession()">
+		<form  method="GET" id="formSession" onsubmit="return validarSession()" action="session.php">
 			<div class="text-center">Iniciar Sesión</div>
 			<input type="text" placeholder="Usuario" name="user" id="users"  class="form-control ml-3 mb-3">
-			<p class="errorUser text-center d-none text-danger"></p>
+			<p class="errorUser text-center d-none text-danger"></p> 
 			<input type="password" placeholder="Contraseña" name="password" id="passwords"  class="form-control ml-3 mt-3">
 			<p class="errorPass d-none text-center text-danger"></p>
 			<p class=" errorMessage text-center text-danger"></p>
@@ -41,6 +41,8 @@
 	const pass=document.getElementById("passwords");
 	const errorUser=document.querySelector(".errorUser");
 	const errorPass=document.querySelector(".errorPass");
+	const errorMessage=document.querySelector(".errorMessage");
+	const form=document.getElementById("formSession");
 
 	function mostrarErrores(array){
 		array.forEach(item => {
@@ -48,10 +50,15 @@
 			item.errorType.textContent=item.error;
 		})
 	}
+			let datas={};
+				fetch("http://localhost/Grupos/viewIndex/user.php")
+				.then(res=>res.json())
+				.then(data=>datas=data[0]); 
 
 			function validarSession(){
 				
 				const errores=[];
+			
 
 				if(!user.value.trim()){
 					errores.push({errorType:errorUser,error:"Este campo es requerido"});
@@ -64,10 +71,18 @@
 				if(!pass.value.trim()){
 					errores.push({errorType:errorPass,error:"Este campo es requerido"});
 					pass.classList.add("is-invalid");
+				
 				}else{
 					errorPass.classList.add("d-none");
 					pass.classList.remove("is-invalid");
 				}
+
+			if(pass.value!=="" && user.value!==""){
+				if(pass.value.trim()!==datas.Password || user.value.trim()!==datas.Usuario){
+						errores.push({errorType:errorMessage,error:"Usuario/Contraseña es incorrecta"});
+				}
+			}
+				
 				if(errores.length!==0){
 					mostrarErrores(errores)
 					return false;

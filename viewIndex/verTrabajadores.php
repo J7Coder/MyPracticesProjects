@@ -1,7 +1,7 @@
 <?php
 session_start();
-include "datos.php";
-if(!$_SESSION['user'] && !$_SESSION['password']){
+    include "datos.php";
+    if(!$_SESSION['user'] && !$_SESSION['password']){
     header('location:../loginDesign/login.php');
 }
 ?>
@@ -66,7 +66,7 @@ if(!$_SESSION['user'] && !$_SESSION['password']){
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
 <form class="form-inline" method="POST">
-    <input class="form-control mr-sm-2 left key-word2" type="text" placeholder="Nombre del trabajador" name="keyWord3">
+    <input class="form-control mr-sm-2 left key-word2" type="text" placeholder="Nombre del trabajador" name="keyWord3" id="workers">
     <button class="btn btn-success" type="submit" name="ver_trabajadores"  onclick="return validarBuscarDos()">Buscar</button
 </form>
 <ul class="navbar-nav">
@@ -101,11 +101,10 @@ if(!$_SESSION['user'] && !$_SESSION['password']){
                         echo '<img class="card-img-top" src="images/userFemale.png" alt="Card image" style="width:100%">';
                     }
                 ?>
-                <div class="card-body shadow">
+                <div class="card-body shadow text-center">
                     <h4 class="card-title"><?php echo htmlspecialChars($datos["Nombre"]." ".$datos["Apellido"]);?></h4>
                     <p class="card-text"><b>Rut:</b><?php echo htmlspecialChars(" ".$datos["Rut"]);?></p>
-                    <a href="#" class="btn btn-primary stretched-link">Editar</a>
-                    <a href="#" class="btn btn-danger stretched-link float-right">Eliminar</a>
+                    <a href="eliminarTrabajador.php?id=<?php echo htmlspecialChars(" ".$datos["Id"]);?>" class="btn btn-danger stretched-link" onclick=" return eliminarTrabajador()">Eliminar</a>
                 </div>
             </div>
 
@@ -114,6 +113,24 @@ if(!$_SESSION['user'] && !$_SESSION['password']){
         <?php endforeach ?>
     </section>
 </div>
-<script src="app.js"></script>
+
+<script>
+    function eliminarTrabajador(){
+        if(confirm("Estás a punto de eliminar este trabajador dentro del sistema\n ¿Quieres realizar esta operación?")){
+            return true;
+        }
+        return false;
+    }
+
+    function validarBuscarDos(){
+        let buscarWord=document.getElementById("workers").value;
+
+        if(!buscarWord){
+            alert("Debes ingresar un nombre");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

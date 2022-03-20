@@ -216,6 +216,11 @@ $_result= $pdo-> prepare($sql_trabajador);
 $_result->execute();
 $Trabajadores=$_result->fetchAll();
 
+//selecionar informaciones
+$_sql="select * from informacion";
+$_infos= $pdo-> prepare($_sql);
+$_infos->execute();
+$_Infos=$_infos->fetchAll();
 
 //Agregar procesos
     Global $Succed;
@@ -303,3 +308,34 @@ if(isset($_POST["ver_trabajadores"])){
    
 }
 $res_trabajadores=$_result->fetchAll();
+
+
+//Insertar informaciones
+global $error_info;
+global $success_info;
+if(isset($_POST["btn_info"])){
+    $descripcion=$_POST["descripcion"];
+    $info=$_POST["info"];
+    $sql="select * from informacion";
+    $_result= $pdo-> prepare($sql);
+    $_result->execute();
+    $rows=$_result->rowCount();
+    if($rows==0){
+        $sql="insert into informacion (Des, Info) values(?,?)";
+        $_result= $pdo-> prepare($sql);
+        $_result->execute(array($descripcion,$info));
+
+        if($_result){
+            $success_info="Informaciones han sido agregadas exitosamente!";
+        }else{
+            $error_info="Hubo un error, no se puede agregar las informaciones";
+        }
+    }else{
+        $error_info="Hay informaciones guardadas dentro del sistema, debes eliminarlas para poder agregar nuevas informaciones";
+    }
+}
+    
+   
+
+
+
