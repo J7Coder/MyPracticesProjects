@@ -1,6 +1,9 @@
 
 <?php
-
+	session_start();
+  if(!$_SESSION['user'] && !$_SESSION['password']){
+      header('location:login.php');
+  }
 ?>
 
 
@@ -16,7 +19,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-        font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            background:#07024e;
         }
 
         .mobile-container {
@@ -46,7 +50,7 @@
         }
         .text{
         color: blue;
-        top:62px;
+        top:70px;
         position: relative;
         text-decoration: none;
         margin-left:8px;
@@ -91,29 +95,55 @@
      
     </style>
 </head>
-<body>
+<body class="bg-primary">
 
 <!-- Simulate a smartphone / tablet -->
-<div class="mobile-container">
-<a class="text"><bold>ABC</bold><span>PACK</span></a>
-    <!-- Top Navigation Menu -->
-    <div class="topnav">
-    <a class="active"><img src="logo3.png"</a>
-    <div id="myLinks">
-        <a href="#news" class="links">Grupos</a>
-        <a href="#contact" class="links">Procesos</a>
-        <a href="#about" class="links">Salir</a>
+<div class="mobile-container m-2 bg-light-gray">
+  <a class="text"><bold>ABC</bold><span>PACK</span></a>
+      <!-- Top Navigation Menu -->
+      <div class="topnav rounded">
+          <a class="active"><img src="logo3.png"</a>
+          <div id="myLinks">
+              <a href="grupos.php" class="links">Grupos</a>
+            <a href="procesos.php" class="links">Procesos</a>
+            <a href="../datos/cerrar_session.php" class="links" onclick="return confirmarSalir()">Salir</a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
     </div>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-    </div>
+        <!-- contenedor para mostrar las informaciones -->
+      <div class="container">
+        <div class="shadow-lg p-1 mb-5 bg-body rounded mt-5">
+          <div class="text-white bg-primary rounded">
+          <h1 class="title text-center p-1">What's new ?</h1>
+          </div>
+          <div class="paraf text-secondary">
+            Esuna prueba para verificar si se vera bien las informaciones
+
+          </div>
+          </div>
+      </div>
+
+     <div class="container">
+     <div class="shadow-lg p-1 mb-5 bg-body rounded mt-5">
+       <div class="text-white bg-primary rounded">
+       <h1 class="title text-center p-1">Grupo del dia</h1>
+       </div>
+       <div class="info text-center">
+        <strong class=" text-dark text-center">Malloa x 6 <span class="bodega">25D</span></strong>
+          <p class="workers text-secondary">Jean Phillype Marteli</p>
+          <p class="workers text-secondary">Alberto Alfonso</p>
+          <p class="workers text-secondary">Anderson Charles</p>
+       </div>
+      </div>
+     </div>
 
 
 
-<!-- End smartphone / tablet look -->
+    <!-- End smartphone / tablet look -->
 
-</div>
+  </div>
 
 <script>
 function myFunction() {
@@ -134,6 +164,14 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+  function confirmarSalir(){
+    let responce=confirm("¿Realmente quieres salir?");
+    if(responce){
+      return true;
+    }
+    return false;
+  }
 </script>
 
 </body>

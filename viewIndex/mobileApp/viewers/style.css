@@ -1,0 +1,33 @@
+
+.ctf{
+    position:absolute;
+    top:180px;
+    left:70px;
+ }
+ #mylogo a{
+     position:relative;
+     top: 120px;
+     right:160px;
+     font-size:36px;
+ }
+
+  .spinner-border{
+     position:relative;
+     top: 400px;
+     left:10px;
+    
+ }
+
+ .header{
+     position:relative;
+     top: 600px;
+     left:50px;
+    
+ }
+ #mylogo a bold{
+     color:#07024e;
+ }
+
+ #mylogo a span{
+     color:#03a4df;
+ }
