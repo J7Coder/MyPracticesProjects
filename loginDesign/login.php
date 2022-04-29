@@ -22,7 +22,7 @@
 <body>
 	<div class="form-holder">
 		<img src="img/logo3.png">
-		<form  method="GET" id="formSession" onsubmit="return validarSession()" action="session.php">
+		<form  method="Get" id="formSession" onsubmit="return validarSession()">
 			<div class="text-center">Iniciar Sesión</div>
 			<input type="text" placeholder="Usuario" name="user" id="users"  class="form-control ml-3 mb-3">
 			<p class="errorUser text-center d-none text-danger"></p> 

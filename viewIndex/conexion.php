@@ -6,7 +6,7 @@ $password='';
 try
 {
     $pdo=new PDO($cadena,$usuario,$password);
-    /*echo 'Conexion is activated!!'.'<br/>';*/
+    //echo 'Conexion is activated!!'.'<br/>';
 
 
 } catch (PDOException $e) 
