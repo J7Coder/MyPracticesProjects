@@ -24,20 +24,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        .avatar {
-        border-radius: 50%;
-        width: 200px;
-    }
-    .hero{
-        margin-top: 80px;
-    }
-    .mage{
-      margin-left:25px;
-    }
+          .avatar {
+          border-radius: 50%;
+          width: 200px;
+      }
+      .hero{
+          margin-top: 80px;
+      }
+      .mage{
+        margin-left:25px;
+      }
 
-    .head-mage{
-      padding-left:130px;
-    }
+      .head-mage{
+        padding-left:130px;
+      }
     </style>
 </head>
 <body>

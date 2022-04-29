@@ -24,17 +24,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        .avatar {
-        border-radius: 50%;
-        width: 200px;
-    }
-    .hero{
-        margin-top: 80px;
-    }
-    .h1-title{
-        width: 100%;
-    }
-   
+          .avatar {
+          border-radius: 50%;
+          width: 200px;
+      }
+      .hero{
+          margin-top: 80px;
+      }
+      .h1-title{
+          width: 100%;
+      }
+    
     </style>
 </head>
 <body>

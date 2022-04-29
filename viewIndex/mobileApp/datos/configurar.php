@@ -1,36 +1,68 @@
 <?php
 include '../../conexion.php';
-
-//configurar cuenta
-global $_error;
-global $_success;
-$_error='';
-$_success='';
-if(isset($_POST['btn_configurar'])){
-   $rut=$_POST['rut'];
-   $pass_=$_POST['pass'];
+include 'rut_valide.php';
+class AcountConfig{
+   private $data;
+   private $messages = [];
+   private static $fields = ['rut', 'pass'];
  
-      //buscar Trabajadores
-   $sql="select * from trabajadores where Rut=?";
-   $_result= $pdo-> prepare($sql);
-   $_result->execute(array($rut));
-   $res_=$_result->rowCount();
-   if($res_>0){
-      
-      $estado='0';
-      $sql="insert into usuarios (Usuario, Password, Estado) values(?, ?, ?)";
-      $query=$pdo->prepare($sql);
-      //$result=$query->execute(array($rut,$pass_,$estado));
-      if($result){
-         $_success="Tu cuenta está configurada correctamente!!";
-      }else{
-         $_error="No pudimos configurar tu cuenta por favor vuelve a intentarlo de nuevo!";
+   public function __construct($post_data){
+     $this->data = $post_data;
+   }
+ 
+   public function validateFields(){
+ 
+     foreach(self::$fields as $field){
+       if(!array_key_exists($field, $this->data)){
+         trigger_error("'$field' no está presente en los datos enviados");
+         return;
+       }
+     }
+ 
+     $this->addUser();
+     return $this->messages;
+ 
+   }
+
+   private function addUser(){
+      $rut = trim($this->data['rut']);
+      $pass = trim($this->data['pass']);
+    
+      if(empty($rut)){
+        $this->addMessage('failed', 'Debes ingresar un rut,vuelve a intentarlo!');
+      } else{
+         if(! _Helpers::validaRut($rut) ){
+          $this->addMessage('failed', 'El rut no es valido, vuelve a intentarlo!');
+         }else{
+            if(! _Helpers::buscarUsuario($rut)){
+             $this->addMessage('failed', "El rut: $rut no se encuentra dentro del sistema, contacta la administración");
+            }
+         }
+      }
+
+      if(empty($pass)){
+         $this->addMessage('failed', 'Debes ingresar una contraseña, vuelve!');
+      }
+
+      if(!empty($rut) && !empty($pass)){
+         if(_Helpers::validaRut($rut) && _Helpers::buscarUsuario($rut)){
+            $estado='0';
+            $sql="insert into usuarios (Usuario, Password, Estado) values(?, ?, ?)";
+            $query=$pdo->prepare($sql);
+            $result=$query->execute(array($rut,$pass,$estado));
+            if($result){
+               $this->addMessage('success', 'Tu cuenta ha sido configurada correctamente!');
+            }else{
+               $this->addMessage('failed', 'No pudimos configurar tu cuenta, por favor vuelve a intentarlo de nuevo');
+            }
+         }
       }
    }
-   if($res_==0){
-      $_error="El rut $rut no está asociado con ningun trabajador dentro de nuestro sistema por favor contacta la admistración!";
-   }
-   
-   
+
+
+   private function addMessage($key, $mes){
+      $this->messages[$key] = $mes;
+    }
 }
+
      
