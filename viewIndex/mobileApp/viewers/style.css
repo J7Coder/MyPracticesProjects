@@ -10,7 +10,6 @@
      right:160px;
      font-size:36px;
  }
-
   .spinner-border{
      position:relative;
      top: 400px;
@@ -32,11 +31,19 @@
      color:#03a4df;
  }
 
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-
- body {
+ #body-corp {
     font-family: Arial, Helvetica, sans-serif;
     background: rgba(152,27,236);
+    padding-top:30px;
+    padding-left:10px;
+    padding-right:30px;
+}
+#marge .form-holder{
+    height:100%;
 }
 form {border: 3px solid #f1f1f1;}
 .text-small {
@@ -74,7 +81,7 @@ margin: 24px 0 12px 0;
 }
 
 img.avatar {
-width: 10%;
+width: 20%;
 border-radius: 50%;
 }
 
@@ -100,7 +107,7 @@ span.psw {
     position: relative;
     text-decoration: none;
     margin-left:8px;
-    font-size:14px;
+    font-size:18px;
     display: block;
     z-index: 1;
 }
@@ -112,12 +119,12 @@ span.psw {
     padding-left:2px;
 }
 .title_text{
-    margin-left:85px;
-    font-size:28px;
+    margin-left:80px;
+    font-size:30px;
     color:#2e06dd;
 }
 .labels label{
-    font-size:18px;
+    font-size:20px;
 }
 
 
@@ -235,7 +242,9 @@ span.psw {
         color: black;
         height: 75px;
     }
-
+    .bodega{
+        margin-left: 20px;
+    }
     #error{
         font-size:16px;
     }

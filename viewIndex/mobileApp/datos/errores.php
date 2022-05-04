@@ -3,7 +3,7 @@ require('validarRut.php');
 class UserValidator {
    private $data;
    private $errors = [];
-   private static $fields = ['user', 'psw','message'];
+   private static $fields = ['user','message'];
  
    public function __construct($post_data){
      $this->data = $post_data;
@@ -19,7 +19,6 @@ class UserValidator {
      }
  
      $this->validarUsuario();
-     $this->validarPassword();
      return $this->errors;
  
    }
@@ -36,22 +35,12 @@ class UserValidator {
          $this->addError('user', 'El rut no es valido');
         }else{
            if(! Helper::buscarUsuario($rut)){
-            $this->addError('message', 'Usuario no encontrado');
+            $this->addError('message', 'El rut ingresado no está registrado dentro del sistema, por favor contacta la administración');
            }
         }
      }
    }
  
-   private function validarPassword(){
- 
-     $val = trim($this->data['psw']);
- 
-     if(empty($val)){
-       $this->addError('psw', 'Campo requerido');
-     } 
-     
- 
-   }
  
    private function addError($key, $error){
      $this->errors[$key] = $error;

@@ -1,18 +1,28 @@
-<?php    
-include '../../conexion.php';     
+<?php       
 class User_session{
     private $data;
-  
+    private $datos;
     public function __construct($post_data){
       $this->data = $post_data;
     }
     public function validar_session(){
-        $_SESSION["user"] = '26448070-1';
-        $_SESSION["pass"] ='1234';
+        include '../../conexion.php';  
+        $_SESSION["user"] ='';
+            $_SESSION["admin"]='';
         $Usuario=$this->data["user"];
-        $Password=$this->data["psw"];
-        
-        if($_SESSION["user"]===$Usuario && $_SESSION["pass"]===$Password){
+        $sql="select * from trabajadores where Rut=?";
+        $_result= $pdo-> prepare($sql);
+        $_result->execute(array($Usuario));
+        $_User=$_result->fetchAll();
+       
+        foreach($_User as $_User_){
+            $_SESSION["user"] =$_User_['Rut'];
+            if($_User_['Tipo']==='admin'){
+                $_SESSION['admin']=$_User_['Tipo'];
+            }
+            
+        }
+        if($_SESSION["user"]===$Usuario || $_SESSION["admin"]){
             return true;
         }else{
             return false;

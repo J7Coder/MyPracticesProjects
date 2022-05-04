@@ -1,11 +1,5 @@
 <?php
 class Helper{
-	/**
-	 *	Función de validación de un rut basado en el algoritmo chileno
-	 *	el formato de entrada es ########-# en donde deben ser sólo
-	 *	números en la parte izquierda al guión y número o k en el
-	 *	dígito verificador
-	 */
 
 	static function validaRut ( $rutCompleto ) {
 	if ( !preg_match("/^[0-9]+-[0-9kK]{1}/",$rutCompleto)) return false;

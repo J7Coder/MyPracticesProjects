@@ -1,8 +1,16 @@
 
 <?php
-	session_start();
-  if(!$_SESSION['user'] && !$_SESSION['password']){
+  include '../datos/buscador.php';
+	 session_start();
+  if(!$_SESSION['user']){
       header('location:login.php');
+  }
+  $message='';
+  $buscador= new Buscador();
+  $datos= $buscador->buscarGrupos();
+  if($datos==0){
+      $message="No se encuentra el proceso buscado, por favor intenta con otro nombre";
+      
   }
 ?>
 
@@ -92,7 +100,10 @@
         #myLinks{
             display:none;
         }
-     
+        .mr{
+          margin-left:6px;
+        }
+
     </style>
 </head>
 <body class="bg-primary">
@@ -105,6 +116,9 @@
           <a class="active"><img src="logo3.png"</a>
           <div id="myLinks">
               <a href="grupos.php" class="links">Grupos</a>
+              <?php if($_SESSION['admin']): ?>
+               <a href="#" class="links" href="">Editar Grupos</a>
+              <?php endif; ?>
             <a href="procesos.php" class="links">Procesos</a>
             <a href="../datos/cerrar_session.php" class="links" onclick="return confirmarSalir()">Salir</a>
         </div>
@@ -126,7 +140,7 @@
       </div>
 
      <div class="container">
-     <div class="shadow-lg p-1 mb-5 bg-body rounded mt-5">
+     <div class="shadow-lg p-1 mb-3 bg-body rounded mt-5">
        <div class="text-white bg-primary rounded">
        <h1 class="title text-center p-1">Grupo del dia</h1>
        </div>

@@ -1,15 +1,13 @@
 
     const loginForm=document.getElementById("formSession");
 	const user=document.getElementById("users");
-	const pass=document.getElementById("passwords");
 	const errorUser=document.querySelector(".errorUser");
-	const errorPass=document.querySelector(".errorPass");
 	const errorMessage=document.querySelector(".errorMessage");
 	const divs=document.getElementById("error");
 
 	function vaciarErrores(){
 		document.querySelector(".vaciar").textContent="";
-		document.querySelector(".vaciar_dos").textContent="";
+		errorUser.textContent="";
 		document.querySelector(".vaciar_uno").textContent="";
 	}
 
@@ -66,23 +64,11 @@
 			errorUser.classList.add("d-none");
 			user.classList.remove("is-invalid");
 		}
-			//Validar campo contraseña
-		 if (!pass.value.trim()) {
-			errores.push({ errorType: errorPass, error: "Este campo es requerido" });
-			pass.classList.add("is-invalid");
-			
-
-		} else {
-			errorPass.classList.add("d-none");
-			pass.classList.remove("is-invalid");
-		}
-		
 		 if (errores.length !== 0) {
 			mostrarErrores(errores)
 			return false;
 		} else {
 			errorUser.classList.add("d-none");
-			errorPass.classList.add("d-none");
 			return true;
 		}
 		 
