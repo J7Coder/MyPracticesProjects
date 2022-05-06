@@ -70,6 +70,6 @@
 
         
     </div>
-    <script type="text/javascript" src="scriptCode.js"></script>
+    <script type="text/javascript" src="scriptCodes.js"></script>
 </body>
 </html>

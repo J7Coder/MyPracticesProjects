@@ -79,3 +79,24 @@
 		const btn=document.getElementById('close2');
 		btn.style.display="none";
 	}
+function displayErr(){
+	document.querySelector('.error-text').style.display="none";
+	document.querySelector('.error-text2').style.display="none";
+	document.querySelector('.error-text3').style.display="none";
+}
+
+function validarDeleteAllGrup(){
+	if(confirm('¿Seguro quieres eliminar todos los grupos?')){
+		return true;
+	}
+
+	return false;
+}
+
+function validarDeleteOneGrup(){
+	if(confirm('¿Seguro quieres eliminar este grupo?')){
+		return true;
+	}
+
+	return false;
+}

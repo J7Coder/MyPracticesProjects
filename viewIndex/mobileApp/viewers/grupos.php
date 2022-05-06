@@ -14,7 +14,14 @@
       $message=$nombre? "<b>$nombre </b> no se encuentra en ningun grupo" : "El trabajador buscado no se encuentra en ningun grupo";
       
   }
-   
+  $data_edit='';
+  $data_delete='';
+   if($_GET){
+    $buscador= new Buscador();
+    $data_edit= $buscador->id_grupos($_GET['key']);
+    $data_delete= $buscador->eliminarGrupo($_GET['key']);
+  }
+    
   
 
 ?>
@@ -79,6 +86,9 @@
       .titles{
         font-size:20px;
       }
+      #mynavbar .links{
+        text-decoration:none;
+      }
   </style>
 </head>
 <body>
@@ -92,7 +102,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
-     
+      <?php if($_SESSION['admin']) : ?>
+        <a href="grupos.php?key=all" class="text-danger links" onclick="return validarDeleteAllGrup()">Eliminar grupos</a>
+      <?php endif; ?>
       <form class="d-flex mt-2 " action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
         <input class="form-control me-2" type="text" placeholder="Ingresa un trabajador" name="key_word">
         <button class="btn btn-primary" type="submit" name="btn_key">Buscar</button>
@@ -108,8 +120,15 @@
                 $message
                 </div>";
             } 
+
+            if($data_delete==1){
+              echo "<div class='alert alert-success alert-dismissible fixed-top text-center m-2'>
+              <button type='button' class='link btn btn-outline-warning' data-dismiss='alert'><div><strong><a href='grupos.php'>OK</a></strong></div></button>
+              Grupo ha sido eliminado correctamente!
+              </div>";
+            } 
           ?>
-    <?php if($datos):?>
+        <?php if($datos):?>
         <?php foreach($datos as $grupos): ?>
           <div class="shadow-lg p-1 mb-5 bg-body rounded mt-5">
 
@@ -117,19 +136,19 @@
                 <?php if($_SESSION['admin']): ?>
     
                   <?php if($grupos['alert']==='danger'):?>
-                    <a href="#" class="float-l text-white m-2"><i class="far fa-trash-alt"></i></a>
+                    <a href="grupos.php?key=<?php echo $grupos['Id'];?>" onclick="return validarDeleteOneGrup()"  class="float-l text-white m-2" ><i class="far fa-trash-alt"></i></a>
                   <?php endif?>
 
                   <?php if($grupos['alert']!=='danger'):?>
-                    <a href="#" class="float-l text-danger m-2"><i class="far fa-trash-alt"></i></a>
+                    <a href="grupos.php?key=<?php echo $grupos['Id'];?>" onclick="return validarDeleteOneGrup()"  class="float-l text-danger m-2"><i class="far fa-trash-alt"></i></a>
                   <?php endif?>
 
                   <?php if($grupos['alert']==='danger'):?>
-                    <a href="#" class=" float text-white m-2"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="editar.php?key=<?php echo $grupos['Id'];?>" class=" float text-white m-2"><i class="fas fa-pencil-alt"></i></a>
                   <?php endif?>
 
                   <?php if($grupos['alert']!=='danger'):?>
-                     <a href="#" class="float text-danger m-2"><i class="fas fa-pencil-alt"></i></a>
+                     <a href="editar.php?key=<?php echo $grupos['Id'];?>"  class="float text-danger m-2" ><i class="fas fa-pencil-alt"></i></a>
                   <?php endif?>
 
                 <?php endif; ?>
@@ -149,8 +168,8 @@
     <?php if(!$datos):?>
       <div class="container text-center">No hay grupos para mostrar!</div>
     <?php endif?>
-    </div>
+    
        
-   
+    <script type="text/javascript" src="scriptCodes.js"></script>
 </body>
 </html>

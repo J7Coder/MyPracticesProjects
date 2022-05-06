@@ -51,7 +51,7 @@
 
         .topnav a {
         color: white;
-        padding: 14px 16px;
+        padding: 8px 10px;
         text-decoration: none;
         font-size: 18px;
         display: block;
@@ -116,9 +116,6 @@
           <a class="active"><img src="logo3.png"</a>
           <div id="myLinks">
               <a href="grupos.php" class="links">Grupos</a>
-              <?php if($_SESSION['admin']): ?>
-               <a href="#" class="links" href="">Editar Grupos</a>
-              <?php endif; ?>
             <a href="procesos.php" class="links">Procesos</a>
             <a href="../datos/cerrar_session.php" class="links" onclick="return confirmarSalir()">Salir</a>
         </div>

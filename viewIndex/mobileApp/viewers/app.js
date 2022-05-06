@@ -12,7 +12,7 @@
             });} jetanim();
 
             function timeOut(){
-                window.location="http://localhost/Grupos/viewIndex/mobileApp/viewers/login.php";
+                window.location="login.php";
             }
 
             document.querySelector('body').setAttribute('onload',"setTimeout('timeOut()', 5000)")
