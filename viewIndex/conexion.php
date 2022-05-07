@@ -1,11 +1,11 @@
 <?php
 $cadena='mysql:host=localhost;dbname=proyecto_abcpack';
-$usuario='root';
-$password='';
+$_usuario='root';
+$_password='';
 
 try
 {
-    $pdo=new PDO($cadena,$usuario,$password);
+    $pdo=new PDO($cadena,$_usuario,$_password);
     //echo 'Conexion is activated!!'.'<br/>';
 
 

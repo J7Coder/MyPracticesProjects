@@ -1,6 +1,7 @@
 <?php
 include "conexion.php";
 
+
 //Buscador de grupos
 global $mensaje;
 if(isset($_POST["buscar_grupo"])|| isset($_POST["ver_grupos"])){
@@ -13,7 +14,6 @@ if(isset($_POST["buscar_grupo"])|| isset($_POST["ver_grupos"])){
     if($rows==0){
         $mensaje="El trabajador buscado no pertenece a ningun grupo!";
         $sql="select * from grupos order by Id desc";
-        $_result= $pdo-> prepare($sql);;
         $_result= $pdo-> prepare($sql);
         $_result->execute();
     }
@@ -265,6 +265,7 @@ $nombreT=$_POST["nombreT"];
 $apelT=$_POST["apelT"];
 $rutT=$_POST["rutT"];
 $sexoT=$_POST["sexoT"];
+$tipo="Operario";
 
 $sql_proceso="select * from trabajadores where Rut=?";
 $_results= $pdo-> prepare($sql_proceso);
@@ -272,9 +273,9 @@ $_results->execute(array($rutT));
 $trabajador=$_results->fetch();
 $result="";
 if(!$trabajador){
-    $sql="insert into trabajadores (Nombre, Apellido, Rut, Genero) values(?, ?, ?, ?)";
+    $sql="insert into trabajadores (Tipo,Nombre, Apellido, Rut, Genero) values(?,?, ?, ?, ?)";
     $query=$pdo->prepare($sql);
-    $result=$query->execute(array($nombreT,$apelT,$rutT,$sexoT));
+    $result=$query->execute(array($tipo,$nombreT,$apelT,$rutT,$sexoT));
 }else{
     $err_dos="El trabajador de Rut ".$rutT. " ya esta registrado dentro del sistema";
 }

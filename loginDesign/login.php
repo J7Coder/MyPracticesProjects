@@ -1,5 +1,24 @@
 <?php
 	session_start();
+	require '../viewIndex/user.php';
+
+	$errors ='';
+	if(isset($_POST['btnIntrar'])){
+  		// validate entries
+  		$validation = new Session($_POST);
+  		$session = $validation->sessionValidate();
+  		if($session==0){
+			  $errors="Usuario no se encontrado!";
+		}
+		if($session==-1){
+			$errors="Usuario o contraseña icorrecto!";
+		}
+  		if($session==1){
+			$_SESSION["user"] = $_POST['user'];
+ 			$_SESSION["pass"] = $user['password'];
+			header('Location:../menuPrincipal/index.php');
+		  }
+	}
 ?>
 
 <!DOCTYPE html>
@@ -22,84 +41,55 @@
 <body>
 	<div class="form-holder">
 		<img src="img/logo3.png">
-		<form  method="Get" id="formSession" onsubmit="return validarSession()">
+		<form action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="POST" id="formSession" onSubmit="return validarSession()">
 			<div class="text-center">Iniciar Sesión</div>
-			<input type="text" placeholder="Usuario" name="user" id="users"  class="form-control ml-3 mb-3">
+			<input type="text" placeholder="Usuario" name="user" id="users"  class="form-control ml-3 mb-3" onfocus="vaciarMessage()" value="<?php if(isset($_POST["user"])){echo htmlspecialchars($_POST['user']);}?>">
 			<p class="errorUser text-center d-none text-danger"></p> 
-			<input type="password" placeholder="Contraseña" name="password" id="passwords"  class="form-control ml-3 mt-3">
+			<input type="password" placeholder="Contraseña" name="password" id="passwords"  class="form-control ml-3 mt-3" onfocus="vaciarMessage()" value="<?php if(isset($_POST["user"])){echo htmlspecialchars($_POST['password']);}?>">
 			<p class="errorPass d-none text-center text-danger"></p>
-			<p class=" errorMessage text-center text-danger"></p>
+			<p class=" errorMessage text-center text-danger"><?php echo $errors; ?></p>
 			<button name="btnIntrar" type="submit">Ingresar</button>
 		</form>
 	</div>
 
 
 	<script>
+		function vaciarMessage(){
+			let div=document.querySelector('.errorMessage');
+			div.style.display="none";
+		}
+		function mostrarErrores(array){
+	   		array.forEach(item => {
+	       		item.errorType.classList.remove("d-none");
+	       		item.errorType.textContent=item.error;
+	   		})
+		}
+		const loginForm=document.getElementById("formSession");
+		const user=document.getElementById("users");
+		const pass=document.getElementById("passwords");
+		const errorUser=document.querySelector(".errorUser");
+		const errorPass=document.querySelector(".errorPass");
+		function validarSession(){
 
-	const loginForm=document.getElementById("formSession");
-	const user=document.getElementById("users");
-	const pass=document.getElementById("passwords");
-	const errorUser=document.querySelector(".errorUser");
-	const errorPass=document.querySelector(".errorPass");
-	const errorMessage=document.querySelector(".errorMessage");
-	const form=document.getElementById("formSession");
 
-	function mostrarErrores(array){
-		array.forEach(item => {
-			item.errorType.classList.remove("d-none");
-			item.errorType.textContent=item.error;
-		})
-	}
-			let datas={};
-				fetch("http://localhost/Grupos/viewIndex/user.php")
-				.then(res=>res.json())
-				.then(data=>datas=data[0]); 
+	 		const errores=[];
+	 		if(!user.value.trim()){
+	 			errores.push({errorType:errorUser,error:"Este campo es requerido"})
+	 		}
 
-			function validarSession(){
-				
-				const errores=[];
+	 		if(!pass.value.trim()){
+	 			errores.push({errorType:errorPass,error:"Este campo es requerido"})
+	 		}
+	 		if(errores.length !== 0){
+	 			mostrarErrores(errores)
+	 			return false;
+	 		}else{
+	 			errorUser.classList.add("d-none");
+	 			errorPass.classList.add("d-none");
+	 			return true; 
+	 		}
 			
-
-				if(!user.value.trim()){
-					errores.push({errorType:errorUser,error:"Este campo es requerido"});
-					user.classList.add("is-invalid");
-				}else{
-					errorUser.classList.add("d-none");
-					user.classList.remove("is-invalid");
-				}
-			
-				if(!pass.value.trim()){
-					errores.push({errorType:errorPass,error:"Este campo es requerido"});
-					pass.classList.add("is-invalid");
-				
-				}else{
-					errorPass.classList.add("d-none");
-					pass.classList.remove("is-invalid");
-				}
-
-			if(pass.value!=="" && user.value!==""){
-				if(pass.value.trim()!==datas.Password || user.value.trim()!==datas.Usuario){
-						errores.push({errorType:errorMessage,error:"Usuario/Contraseña es incorrecta"});
-				}
-			}
-				
-				if(errores.length!==0){
-					mostrarErrores(errores)
-					return false;
-				}else{
-					errorUser.classList.add("d-none");
-					errorPass.classList.add("d-none");
-					return true; 
-				}
-
-				
-			}
-			
-			
-			
-		
-		
-	
+		}
 	</script>
 </body>
 </html>
